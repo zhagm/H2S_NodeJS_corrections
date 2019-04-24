@@ -63,12 +63,8 @@ app.post("/todos/:id", (req, res) => {
       todo.description = description || todo.description;
       todo.completed = completed || todo.completed;
       todo.save()
-          .then(todo => {
-            res.status(200).json("Todo updated");
-          })
-          .catch(err => {
-            res.status(400).send("Error: Update not possible");
-          });
+          .then(todo => res.status(200).json("Todo updated"))
+          .catch(err => res.status(400).send("Error: Update not possible"));
     }
   });
 });

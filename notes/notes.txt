@@ -1,5 +1,5 @@
 1.	How long it took you to complete the first runthrough of the project, in hours:
-	I didn't time myself initially so I went back and timed myself (but I have experience so I would guess it would take the children 3-4x longer).
+	It took me 2-3 hours (but I have experience so I would guess it would take the students 3-4x longer). I didn't read through the docs, just clicked the links and checked the relevance, but reading the links alone would take a few hours (of learning).
 
 2.	Notes on what issues you found:
 	- Mongo section was a little vague without much information on what Mongo is.
@@ -12,3 +12,9 @@
 		* I added an Ex. 04 Mongoose section of just walking through a simple Mongoose route. Using this to explain the anatomy too (callback functions).
 
 3.	Notes on which issues you fixed. (If both you and the project author made improvements to the project during this process, assign credit judiciously.)
+
+General Notes:
+* I cloned https://github.com/donald-stolz/H2S-NodeJS.git, and put the pdf and tex files into the directory 'before/PDF_TEX_BEFORE'.
+* 'before' holds the whole repo and the PDF_TEX_BEFORE holds just the pdf and tex files, which are where the changes were made.
+* 'after' holds the whole repo with the changed files updated, and changes holds only the files that were changed. The highlighted files highlight all the changes made to make correction easier.
+* 
