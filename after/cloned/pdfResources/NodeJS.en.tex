@@ -59,7 +59,7 @@ Learn more about the internet, servers, and APIs:
 %******************************************************************************%
 \chapter{Goals}
 
-    By the end of this project, you’ll have built a server. You’ll learn how to create servers by writing backend services with Javascript and develop an understanding of how APIs work. We’ll be creating the backend for a To-do list app that can be hooked up to a frontend that we’ll be making later down the line. Later, using HTML, CSS, and Javascript, we’ll create a view that will show our todo’s as list items that can be checked off.
+    By the end of this project, you’ll have built a server. You’ll learn how to create servers by writing backend services with Javascript and develop an understanding of how APIs work. We’ll be creating the backend for a To-do list app that can be hooked up to a frontend that we’ll be making later down the line. Later, using HTML, CSS, and Javascript, we’ll create a view that will show our to-do’s as list items that can be checked off.
 
 The server we’ll be writing is simple but scalable and can be bigger, a lot bigger. You can imagine even websites like Netflix, PayPal, Medium, and many more are using Node.js with more complex routes. Learning these skills will enable you to build many different apps.
 
@@ -372,8 +372,7 @@ Use a \texttt{db.json} like we did in our previous example for storage.
 Now that we are pros at writing APIs we will connect our API to a proper database instance. Your challenge will be to \texttt{FIRST COPY} your existing API, then replace our current file system database with a newly setup Mongo database.\\
 
 \texttt{First} follow the MongoDB PDF for instructions on setting up a cloud instance of MongoDB.\\
-
-Once we have our DB setup, we can set up Mongoose. Mongoose is an Object Document Modeler, it allows us to define a schema and easily connect to MongoDB. The schema is just the structure, or shape, of the data. We will install it using \texttt{npm install --save mongoose} and require it at the top of server.js as usual. Then we can add the following snippet to connect our API to MongoDB through 
+    Once we have our DB setup, we can set up Mongoose. Mongoose is an Object Document Modeler, it allows us to define a schema and easily connect to MongoDB. We will install it using \texttt{npm install --save mongoose} and require it at the top of server.js as usual. Then we can add the following snippet to connect our API to MongoDB through 
 
 \begin{42jscode}
 	// Connect to MongoDB
@@ -395,14 +394,8 @@ Once we have our DB setup, we can set up Mongoose. Mongoose is an Object Documen
         const Schema = mongoose.Schema;
 
         let Todo = new Schema({
-            task: {
-                type: String,
-                required: true
-            },
-            completed: {
-                type: Boolean,
-                required: true
-            }
+            task: { type: String, required: true },
+            completed: { type: Boolean, required: true }
         });
                     
         module.exports = mongoose.model("Todo", Todo);
@@ -415,10 +408,57 @@ Once we have our DB setup, we can set up Mongoose. Mongoose is an Object Documen
     
     \newpage
     
-    Head to the \href{https://mongoosejs.com/docs/index.html}{Getting Started} section of the mongoose docs to learn more.
+    Read through the \href{https://mongoosejs.com/docs/index.html}{Getting Started} section of the mongoose docs and get acquainted with mongoose.
+After you do that, let’s walk through an example here and make a route for getting all users. You don’t need to write out this code, this is just to familiarize you with Mongoose.
+If you remember, this was the code we had before:
     
+\begin{42jscode}
+        // Get all users
+        app.get("/users", (req, res) => {
+            res.status(200).send(db);
+        });
+\end{42jscode}
+
+    Our mongoose schema for the user would look something like this, and be stored in a file named \texttt{user.model.js}:
+
+	\begin{42jscode}
+        const mongoose = require("mongoose");
+        const Schema = mongoose.Schema;
+
+        let User = new Schema({
+            name: { type: String, required: true },
+            id: { type: Number, required: true }
+        });
+
+        module.exports = mongoose.model("User", User);
+    \end{42jscode}
+
+    Next we will import the User model into the server.js:
+
+    \begin{42jscode}
+        const User = require("./user.model");
+    \end{42jscode}
+
+    Now our server.js has access to the User model and all of it’s methods. The method we’ll be using is the \href{https://mongoosejs.com/docs/api.html#model_Model.find}{find} method. The find method takes an object with the properties it’s looking for, so we could try to find someone by their name. If we don’t pass it any object, it’ll return all the model items, which is what we want to do for our ‘/users’ route. Our new code would look something like this:
+
+\begin{42jscode}
+        // Get all users
+        app.get("/users", (req, res) => {
+            User.find((err, users) => {
+                if (err) {
+                console.log(err);
+                res.status(400).send("Error: failed to get users");
+                } else {
+                res.status(200).json(users);
+                }
+            });
+        });
+\end{42jscode}
+
+    That's all for the walk-through, now it's your turn to implement Mongoose in your To-do list API. Good luck!
+
     \hint {
-        Check out the \href{https://bit.ly/2T1PWuF}{Mongoose model API docs}
+        Check out the \href{https://bit.ly/2T1PWuF}{Mongoose model API docs} to find the other methods that will help you rewrite your routes with Mongoose.
         }
         
         \newpage
